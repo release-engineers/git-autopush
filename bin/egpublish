@@ -22,8 +22,7 @@ for (( i = 0; i < ${db_entries_count}; i++ )); do
     git checkout "${branch}"
     git commit --amend --no-edit
     git push origin "${branch}" --force
-    feature=$(_egfeature)
-    gh pr create --title "${feature}" --body "See ${feature}."
+    gh pr create --fill
   )
 done
 
