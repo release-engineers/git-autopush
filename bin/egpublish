@@ -4,8 +4,27 @@
 #
 set -e -o pipefail
 
-# for each entry in the db file
+
+# for each array entry in db.yml
 # - amend the last commit on that branch to update their timestamps
 # - push the branch to the remote
 # - create a GitHub pull request for it
 # clear the db file
+
+path_script=$(dirname "$0")
+path_db="${path_script}/../db.yml"
+
+db_entries_count=$(yq ". | length" "${path_db}")
+for (( i = 0; i < ${db_entries_count}; i++ )); do
+  entry=$(yq ".[${i}]" "${path_db}")
+  directory=$(echo "${entry}" | yq ".directory")
+  branch=$(echo "${entry}" | yq ".branch")
+  (
+    set -e -o pipefail
+    cd "${directory}"
+    git checkout "${branch}"
+    git reset --hard
+    git commit --amend --no-edit
+    git push origin "${branch}" --force
+  )
+done
