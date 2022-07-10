@@ -1,3 +1,3 @@
 # libasync
 
-Utilities for working with commits and pull requests asynchronously, across many repositories
+Utilities for working with large amounts of commits and pull requests asynchronously, across many repositories.
