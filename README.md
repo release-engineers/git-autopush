@@ -11,7 +11,7 @@ For automating commits and pushes;
 
 For working with batches of pull requests;
 
-| Script                           | Description                                                                                  |
-|----------------------------------|----------------------------------------------------------------------------------------------|
-| [bin/prepare](bin/egprepare)     | Ensures the changes are on a feature branch, `autocommit`s and records the prepared feature. |
-| [bin/egpublish](bin/egpublish)   | Publishes all prepared features by pushing them to origin and creating GitHub pull requests. |
+| Script                         | Description                                                                                  |
+|--------------------------------|----------------------------------------------------------------------------------------------|
+| [bin/egprepare](bin/egprepare) | Ensures the changes are on a feature branch, `autocommit`s and records the prepared feature. |
+| [bin/egpublish](bin/egpublish) | Publishes all prepared features by pushing them to origin and creating GitHub pull requests. |
