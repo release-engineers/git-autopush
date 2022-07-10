@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 #
-# Publish commits prepared by `egprepare`.
+# Publish prepared commits by pushing them and creating pull requests for them.
+# See also `egprepare`.
 #
 set -e -o pipefail
-
-
-# for each array entry in db.yml
-# - amend the last commit on that branch to update their timestamps
-# - push the branch to the remote
-# - create a GitHub pull request for it
-# clear the db file
 
 path_script=$(dirname "$0")
 path_db="${path_script}/../db.yml"
@@ -19,12 +13,18 @@ for (( i = 0; i < ${db_entries_count}; i++ )); do
   entry=$(yq ".[${i}]" "${path_db}")
   directory=$(echo "${entry}" | yq ".directory")
   branch=$(echo "${entry}" | yq ".branch")
+  echo "---"
+  echo "  directory: ${directory}"
+  echo "  branch: ${branch}"
   (
     set -e -o pipefail
     cd "${directory}"
     git checkout "${branch}"
-    git reset --hard
     git commit --amend --no-edit
     git push origin "${branch}" --force
   )
 done
+
+# create a GitHub pull request for it
+# clear the db file
+
