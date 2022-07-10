@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# Writes an entry into the local database for later publishing.
+#
+set -e -o pipefail
+
+path_script=$(dirname "$0")
+path_db="${path_script}/../db.yml"
+
+# ensure the yq document exists
+if [ ! -f "${path_db}" ]; then
+  touch "${path_db}"
+fi
+
+export directory=$(pwd)
+export branch=$(git rev-parse --abbrev-ref HEAD)
+yq --inplace '. + [
+  {
+    "directory": env(directory),
+    "branch": env(branch)
+  }
+]' "${path_db}"

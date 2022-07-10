@@ -27,7 +27,7 @@ if [ "${files_count}" -gt "2" ]; then
 fi
 
 # prefix message with identifier of feature/ or bugfix/ branches
-feature=$(egfeature)
+feature=$(_egfeature)
 if [ -n "${feature}" ]; then
     message="[${feature}] ${message}"
 fi
