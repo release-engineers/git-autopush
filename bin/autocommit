@@ -14,14 +14,20 @@ if [ "${files_count}" == "0" ]; then
     exit 0
 fi
 
-message="Updated $(echo -e "${files}" | paste -s -d", ")"
-# if file is greater than 2, use "Multiple files changed" message
+message="Updated $(echo "${files}" | paste -s -d", ")"
+
+# if there is a large amount of files, use a shorter message
 if [ "${files_count}" -gt "2" ]; then
-    message="Updated multiple files"
+    directories=$(echo "${files}" | xargs -I {} dirname {} | sort | uniq -c | sort -nr | awk '{print $2}')
+    directories_count=$(echo "${directories}" | wc -l)
+    if [ "${directories_count}" -gt "2" ]; then
+        message="Updated multiple files"
+    else
+        message="Updated $(echo "${directories}/" | paste -s -d"/, ")"
+    fi
 fi
 
-# if the branch is in the format of "feature/<name>" or "bugfix/<name>"
-# then prefix the commit message with the <name> part
+# prefix message with identifier of feature/ or bugfix/ branches
 branch=$(git rev-parse --abbrev-ref HEAD)
 if [[ "${branch}" =~ ^(feature|bugfix)\/(.*) ]]; then
     prefix="[${BASH_REMATCH[2]}]"

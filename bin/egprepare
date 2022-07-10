@@ -3,4 +3,3 @@
 # Prepare local commits for publishing.
 #
 set -e -o pipefail
-

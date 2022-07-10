@@ -3,4 +3,3 @@
 # Publish commits prepared by `egprepare`.
 #
 set -e -o pipefail
-
