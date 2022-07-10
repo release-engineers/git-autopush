@@ -8,5 +8,5 @@ set -e -o pipefail
 
 branch=$(git rev-parse --abbrev-ref HEAD)
 if [[ "${branch}" =~ ^(feature|bugfix)\/(.*) ]]; then
-    echo "${BASH_REMATCH[2]}"
+  echo "${BASH_REMATCH[2]}"
 fi

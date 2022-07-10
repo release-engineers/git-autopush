@@ -3,3 +3,9 @@
 # Publish commits prepared by `egprepare`.
 #
 set -e -o pipefail
+
+# for each entry in the db file
+# - amend the last commit on that branch to update their timestamps
+# - push the branch to the remote
+# - create a GitHub pull request for it
+# clear the db file
