@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# Amends local changes to the last commit and somewhat safely force pushes it.
+#
+set -e -o pipefail
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+git fetch
+latest_local=$(git rev-parse "${BRANCH}")
+latest_remote=$(git rev-parse "origin/${BRANCH}")
+if [ "${latest_local}" != "${latest_remote}" ]; then
+    echo "will not force push; the local branch is not up to date with the remote branch. rebase before running eg-amend."
+    exit 1
+fi
+
+git commit -a --amend --no-edit --no-verify
+git push origin "${BRANCH}" -f
