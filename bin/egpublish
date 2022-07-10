@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
 #
-# Publish commits prepared by `egprepare`.
+# Publish prepared commits by pushing them and creating pull requests for them.
+# See also `egprepare`.
 #
 set -e -o pipefail
+
+path_script=$(dirname "$0")
+path_db="${path_script}/../db.yml"
+
+db_entries_count=$(yq ". | length" "${path_db}")
+for (( i = 0; i < ${db_entries_count}; i++ )); do
+  entry=$(yq ".[${i}]" "${path_db}")
+  directory=$(echo "${entry}" | yq ".directory")
+  branch=$(echo "${entry}" | yq ".branch")
+  echo "---"
+  echo "  directory: ${directory}"
+  echo "  branch: ${branch}"
+  (
+    set -e -o pipefail
+    cd "${directory}"
+    git checkout "${branch}"
+    git commit --amend --no-edit
+    git push origin "${branch}" --force
+    gh pr create --fill
+  )
+done
+
+timestamp=$(date +%s)
+mv "${path_db}" "${path_db}-$timestamp.bak"
