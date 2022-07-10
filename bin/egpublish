@@ -8,6 +8,13 @@ set -e -o pipefail
 path_script=$(dirname "$0")
 path_db="${path_script}/../db.yml"
 
+cat "${path_db}"
+read -p "Publish all of the above? [yes/N] " -n 1 -r
+echo
+if [ "$REPLY" != "yes" ]; then
+    exit 1
+fi
+
 db_entries_count=$(yq ". | length" "${path_db}")
 for (( i = 0; i < ${db_entries_count}; i++ )); do
   entry=$(yq ".[${i}]" "${path_db}")
