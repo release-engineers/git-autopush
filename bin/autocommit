@@ -26,6 +26,9 @@ if [ "${files_count}" -gt "2" ]; then
   fi
 fi
 
+# replace /./ with / (if any)
+message=$(echo "${message}" | sed 's#/\.\/#/#g')
+
 # prefix message with identifier of feature/ or bugfix/ branches
 feature=$(_egfeature)
 if [ -n "${feature}" ]; then
