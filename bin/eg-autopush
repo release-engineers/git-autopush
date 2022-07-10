@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# eg-autocommit, eg-push
+#
+set -e -o pipefail
+
+eg-autocommit
+eg-push
