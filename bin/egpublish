@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Publish commits prepared by `eg-prepare`.
+# Publish commits prepared by `egprepare`.
 #
 set -e -o pipefail
 

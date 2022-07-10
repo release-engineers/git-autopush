@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 #
-# Fetch and rebase before a push.
-# Supports remote `origin` only
+# autocommit, eg-push
 #
 set -e -o pipefail
+
+autocommit
 
 branch=$(git rev-parse --abbrev-ref HEAD)
 git fetch origin
