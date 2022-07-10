@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
-
+#
+# Fetch and rebase before a push.
+# Supports remote `origin` only
+#
 set -e -o pipefail
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+git fetch origin
+git rebase origin/"${branch}"
+git push origin "${branch}"
