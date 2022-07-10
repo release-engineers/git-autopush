@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
 #
-# Prepare local commits for publishing.
+# Prepare local changes for publishing.
 #
 set -e -o pipefail
+
+feature=$1
+if [ -z "${feature}" ]; then
+    echo "Usage: egprepare <feature>"
+    exit 1
+fi
+
+# ensure we are already on the correct branch
+branch=$(git rev-parse --abbrev-ref HEAD)
+if [[ "${branch}" == "master" || "${branch}" == "main" ]]; then
+    echo "On a default branch. Creating a new feature branch."
+    git checkout -b "feature/${feature}"
+fi
+
+# ensure we are now on a feature branch
+feature=$(egfeature)
+if [ -z "${feature}" ]; then
+    echo "Not on a feature branch matching the given feature."
+    exit 1
+fi
+
+autocommit

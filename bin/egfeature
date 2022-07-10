@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Prints the current feature or bugfix identifier, if any.
+#
+set -e -o pipefail
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+if [[ "${branch}" =~ ^(feature|bugfix)\/(.*) ]]; then
+    echo "${BASH_REMATCH[2]}"
+fi
