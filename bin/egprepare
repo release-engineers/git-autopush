@@ -34,17 +34,4 @@ fi
 
 autocommit
 
-# ensure the yq document exists
-if [ ! -f db/db.yml ]; then
-  echo "Creating db.yml"
-  touch db/db.yml
-fi
-
-export directory=$(pwd)
-export branch=$(git rev-parse --abbrev-ref HEAD)
-yq --inplace '. + [
-  {
-    "directory": env(directory),
-    "branch": env(branch)
-  }
-]' db/db.yml
+_egrecord
