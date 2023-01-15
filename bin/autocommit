@@ -47,4 +47,4 @@ fi
 
 printf "@ ${COLOR}git commit\n"
 
-git commit --message "${message}"
+git commit --message "${message}" || true
