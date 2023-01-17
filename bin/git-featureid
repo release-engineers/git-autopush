@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 #
-# Utility for other scripts.
-#
 # Prints the current feature or bugfix identifier, if any.
 #
 set -e -o pipefail

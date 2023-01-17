@@ -6,7 +6,7 @@
 #
 set -e -o pipefail
 
-autocommit $1
+git autocommit $1
 
 COLOR='\033[0;36m'
 COLOR_END='\033[0m'

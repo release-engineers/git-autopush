@@ -40,7 +40,7 @@ if [ -n "$1" ]; then
 fi
 
 # prefix message with identifier of feature/ or bugfix/ branches
-feature=$(featureid)
+feature=$(git featureid)
 if [ -n "${feature}" ]; then
   message="[${feature}] ${message}"
 fi
