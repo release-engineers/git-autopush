@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# Prints a commit prefix based on common conventional commit branch names and GitHub's format for referencing issues.
+# See https://www.conventionalcommits.org/en/v1.0.0/#summary
+#
+# Examples:
+#   feat/123-add-new-feature    -> feat: #123
+#   feature/123                 -> feat: #123
+#   fix/123-fix-bug             -> fix: #123
+#   bugfix/123-cool-feature     -> fix: #123
+#   unknown/123-456             -> chore: #123
+#
+set -e
+set -o pipefail
+
+branch=$(git symbolic-ref --short HEAD)
+
+if [[ "${branch}" =~ ^(feat|feature)\/.* ]]; then
+  printf "feat: "
+elif [[ "${branch}" =~ ^(fix|bugfix)\/.* ]]; then
+  printf "fix: "
+else
+  printf "chore: "
+fi
+
+if [[ "${branch}" =~ ^(feat|feature|fix|bugfix)\/([0-9]+).* ]]; then
+  id="${BASH_REMATCH[2]}"
+  printf "#${id} "
+fi

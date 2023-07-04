@@ -4,17 +4,27 @@
 # Fetches, rebases and pushes the current branch to the remote.
 # Supports remote `origin` only
 #
-set -e -o pipefail
+set -e
+set -o pipefail
+
+function print() {
+  COLOR='\033[0;36m'
+  COLOR_END='\033[0m'
+  printf -- "-- $COLOR$1$COLOR_END\n"
+}
 
 git autocommit $1
 
-COLOR='\033[0;36m'
-COLOR_END='\033[0m'
+branch=$(git symbolic-ref --short HEAD)
 
-branch=$(git rev-parse --abbrev-ref HEAD)
-printf "@ ${COLOR}git fetch${COLOR_END}\n"
+print "fetching origin"
 git fetch origin
-printf "@ ${COLOR}git rebase${COLOR_END}\n"
-git rebase origin/"${branch}"
-printf "@ ${COLOR}git push${COLOR_END}\n"
+
+print "rebasing on origin/${branch}"
+if ! git rebase "origin/${branch}"; then
+  git rebase --abort
+  exit 1
+fi
+
+printf "pushing to origin/${branch}"
 git push origin "${branch}"
