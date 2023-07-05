@@ -20,10 +20,13 @@ branch=$(git symbolic-ref --short HEAD)
 print "fetching origin"
 git fetch origin
 
-print "rebasing on origin/${branch}"
-if ! git rebase "origin/${branch}"; then
-  git rebase --abort
-  exit 1
+print "verifying origin/${branch} exists"
+if git ls-remote --exit-code --heads origin "${branch}"; then
+  print "rebasing on origin/${branch}"
+  if ! git rebase "origin/${branch}"; then
+    git rebase --abort
+    exit 1
+  fi
 fi
 
 printf "pushing to origin/${branch}"
