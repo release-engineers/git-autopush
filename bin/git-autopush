@@ -13,7 +13,7 @@ function print() {
   printf -- "-- $COLOR$1$COLOR_END\n"
 }
 
-git autocommit $1
+git autocommit
 
 branch=$(git symbolic-ref --short HEAD)
 
