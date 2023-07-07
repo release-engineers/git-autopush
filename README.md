@@ -1,5 +1,7 @@
 # git-autopush
 
+[![Status: Production ready](https://img.shields.io/badge/status-production_ready-green)](https://release-engineers.com/open-source-badges/)
+
 Utilities for working with commits when commit messages don't matter.
 
 | Script                               | Description                                                                |
