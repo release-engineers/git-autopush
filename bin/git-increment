@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+# Print the latest tag incremented by $1 as;
+#
+# - v$major.$minor.$patch
+# - v$major.$minor
+# - v$major
+#
+set -e
+set -o pipefail
+
+tag_latest=$(git tag --list | grep --extended-regexp '^(v\d+\.\d+\.\d+)$' | sort --version-sort | tail --lines 1)
+tag_latest=${tag_latest:-'v0.0.0'}
+version=$(echo $tag_latest | cut -d'v' -f2)
+version_major=$(echo $version | cut -d'.' -f1)
+version_minor=$(echo $version | cut -d'.' -f2)
+version_patch=$(echo $version | cut -d'.' -f3)
+
+increment_type=$1
+if [ "$increment_type" == "major" ]; then
+  version_major=$((version_major + 1))
+  version_minor=0
+  version_patch=0
+elif [ "$increment_type" == "minor" ]; then
+  version_minor=$((version_minor + 1))
+  version_patch=0
+elif [ "$increment_type" == "patch" ]; then
+  version_patch=$((version_patch + 1))
+else
+  echo "Usage: $0 [major|minor|patch]"
+  exit 1
+fi
+
+git tag "v$version_major.$version_minor.$version_patch"
+git tag --force "v$version_major.$version_minor"
+git tag --force "v$version_major"
