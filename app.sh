@@ -15,6 +15,9 @@ command=$1
 if [[ $command == "build" ]]; then
   debug
 
+  # add local bin directory to PATH
+  export PATH="$(pwd)/bin:${PATH}"
+
   # generate a project from the template
   test_target=$(mktemp -d)
   trap 'rm -rf "${test_target}"' EXIT
@@ -27,7 +30,6 @@ if [[ $command == "build" ]]; then
   git init --bare "${test_target}/origin"
   git remote add origin "file://${test_target}/origin/"
   echo "Hello" > README.md
-  export PATH="$(pwd)/bin:${PATH}"
   git autopush
 
   # verify that a commit was pushed mentioning the new README
