@@ -45,6 +45,6 @@ fi
 
 echo "Usage: $0 <command>"
 echo "Commands:"
-echo "  build            -- verify a git-autocommit scenario"
+echo "  build            -- verify a git-autopush scenario"
 
 exit 1
