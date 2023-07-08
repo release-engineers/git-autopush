@@ -16,11 +16,11 @@ if [[ $command == "build" ]]; then
   debug
 
   # generate a project from the template
-  sources=$(pwd)
+  export PATH="$(pwd)/bin:${PATH}"
   test_target=$(mktemp -d)
   trap 'rm -rf "${test_target}"' EXIT
 
-  # set up two git repositories and run git-autopush
+  # set up two git repositories and run `git autopush`
   mkdir -p "${test_target}/local"
   mkdir -p "${test_target}/origin"
   cd "${test_target}/local"
@@ -28,7 +28,7 @@ if [[ $command == "build" ]]; then
   git init --bare "${test_target}/origin"
   git remote add origin "file://${test_target}/origin/"
   echo "Hello" > README.md
-  ${sources}/bin/git-autopush
+  git autopush
 
   # verify that a commit was pushed mentioning the new README
   cd "${test_target}/origin"
