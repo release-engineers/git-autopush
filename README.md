@@ -10,7 +10,6 @@ Utilities for working with commits when commit messages don't matter.
 | [git prefix](bin/git-prefix)         | Prints a prefix for a commit message.                                      |
 | [git autocommit](bin/git-autocommit) | Stages the repository directory and commits using above commands.          |
 | [git autopush](bin/git-autopush)     | `git autocommit`s. Then fetches, rebases and pushes that commit to origin. |
-| [git increment](bin/git-increment)   | Assigns git tags based on the last tag.                                    |
 
 ## Installation
 
