@@ -17,6 +17,8 @@ git init
 git init --bare "${test_target}/origin"
 git remote add origin "file://${test_target}/origin/"
 echo "Hello" > README.md
+git config --local user.name 'github-actions[bot]'
+git config --local user.email 'github-actions[bot]@users.noreply.github.com'
 git autopush
 
 # verify that a commit was pushed mentioning the new README
