@@ -38,4 +38,13 @@ fi
 message=$(echo "${message}" | sed 's#/\.\/#/#g')
 
 print "committing changes"
+
+if [ -f ~/.autopush.yml ]; then
+  filter=$(yq '.aicommits.filter' ~/.autopush.yml)
+  if git remote get-url origin | grep -E -q "${filter}"; then
+    aicommits --type conventional
+    exit 0
+  fi
+fi
+
 git commit --message "$(git prefix) ${message}" || true
