@@ -21,3 +21,15 @@ export PATH=$PATH:$(pwd)/git-autopush/bin
 ```
 
 Git will automatically make these scripts available as `git <script>`.
+
+## Configuration
+
+Configuration is optional and can be managed in `~/.autopush.yml`.
+
+```yaml
+aicommits:
+  filter: "release-engineers"
+```
+
+When `.aicommits.filter` is set, `git autocommit` will run `aicommits` instead of its own rudimentary commit message generator for repositories whose origin
+url matches the regex filter string.
